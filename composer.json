@@ -8,5 +8,10 @@
       "name":  "Alexey Volkov",
       "email": "alex.phpdevil@gmail.com"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "PhpDevil\\": ""
+    }
+  }
 }
