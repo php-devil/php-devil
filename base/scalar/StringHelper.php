@@ -36,4 +36,15 @@ class StringHelper
             return $template;
         }
     }
+
+    /**
+     * Конвертирует регистронезависимый идентификатор в часть имени класса или метода
+     *
+     * @param $identifier
+     * @return mixed
+     */
+    public static function convertI2N($identifier)
+    {
+        return $identifier;
+    }
 }

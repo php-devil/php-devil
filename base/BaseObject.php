@@ -18,7 +18,7 @@ use PhpDevil\base\object\UnknownPropertyException;
  * @package PhpDevil\base
  * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
  */
-class BaseObject
+abstract class BaseObject implements Object
 {
     /**
      * Возвращает значение свойства объекта.
