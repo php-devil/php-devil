@@ -7,8 +7,32 @@
 
 namespace PhpDevil\base;
 
+/**
+ * Реализация базового функционала фронт-контроллера модуля приложения:
+ * - предустановка конфигураций контроллеров
+ *
+ * @package PhpDevil\base
+ * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
+ */
 abstract class BaseModule extends BaseComponent implements Module
 {
+    /**
+     * Предустановленные конфигурации контроллеров
+     * @var
+     */
+    protected $_controllers = [];
+
+    /**
+     * Предустановка конфигураций контроллеров
+     * @param array $controllers
+     */
+    public function setControllers(array $controllers=[])
+    {
+        foreach ($controllers as $id=>$config) {
+            $this->_controllers[$id]=$config;
+        }
+    }
+
     /**
      * Возвращает имя пространства имен контроллеров
      * @return string

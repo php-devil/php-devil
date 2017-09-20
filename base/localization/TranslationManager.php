@@ -21,6 +21,7 @@ class TranslationManager
 
     public function setLanguage($language = 'ru')
     {
+        $this->clearCache();
         $this->_language = $language;
     }
 
@@ -46,5 +47,10 @@ class TranslationManager
             $this->_loadedPackets[$fileName] = $packageMessages;
         }
         return $this->_loadedPackets[$fileName];
+    }
+
+    public function clearCache()
+    {
+        $this->_loadedPackets = [];
     }
 }

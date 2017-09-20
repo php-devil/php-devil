@@ -21,6 +21,15 @@ use PhpDevil\base\object\UnknownPropertyException;
 abstract class BaseObject implements Object
 {
     /**
+     * Возвращает конфигурацию объекта по умолчанию
+     * @return array
+     */
+    public static function configurationDefault()
+    {
+        return [];
+    }
+
+    /**
      * Возвращает значение свойства объекта.
      *
      * @param $name
@@ -118,7 +127,7 @@ abstract class BaseObject implements Object
     public function __construct(array $config = [])
     {
         if (!empty($config)) {
-            ObjectConfigureHelper::configure($this, $config);
+            ObjectConfigureHelper::configure($this, array_merge(static::configurationDefault(), $config));
         }
         $this->init();
     }

@@ -7,7 +7,7 @@
 
 namespace PhpDevil\base;
 
-abstract class BaseController extends BaseComponent
+abstract class BaseController extends BaseComponent implements Controller
 {
     public function __construct($id, array $config = [])
     {

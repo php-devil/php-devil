@@ -9,6 +9,7 @@ namespace PhpDevil;
 
 use PhpDevil\base\localization\TranslationManager;
 use PhpDevil\base\aliases\AliasManager;
+use PhpDevil\base\services\ServiceLocator;
 
 
 class Devil
@@ -24,6 +25,27 @@ class Devil
      * @var TranslationManager
      */
     private static $_translationManager = null;
+
+    /**
+     * Локатор служб приложения
+     * @var ServiceLocator|null;
+     */
+    private static $_services = null;
+
+    /**
+     * Инициализация локатора служб
+     *
+     * @param $application
+     * @param array $override
+     * @return bool
+     */
+    public static function ensureServices($application, array $override = [])
+    {
+        if (null === self::$_services) {
+            self::$_services = new ServiceLocator($application, $override);
+        }
+        return false;
+    }
 
     /**
      * Инициализация менеджера путей при первом обращении
@@ -114,5 +136,16 @@ class Devil
     {
         self::ensureTranslations();
         return self::$_translationManager->translate($package, $template, $arguments);
+    }
+
+    /**
+     * Сброс локатора служб приложения
+     */
+    public static function clearServices()
+    {
+        self::$_services = null;
+        if (null !== self::$_translationManager) {
+            self::$_translationManager->clearCache();
+        }
     }
 }
