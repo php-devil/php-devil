@@ -6,7 +6,9 @@
  */
 
 namespace PhpDevil\base;
+use PhpDevil\base\object\BadCallException;
 use PhpDevil\base\object\ObjectConfigureHelper;
+use PhpDevil\base\object\UnknownPropertyException;
 
 /**
  * Базовый объект.
@@ -18,6 +20,84 @@ use PhpDevil\base\object\ObjectConfigureHelper;
  */
 class BaseObject
 {
+    /**
+     * Возвращает значение свойства объекта.
+     *
+     * @param $name
+     * @return mixed
+     * @throws BadCallException - если запрошенное свойство доступно только для записи
+     * @throws UnknownPropertyException - если запрошенное свойство не определено
+     */
+    public function __get($name)
+    {
+        $getter = 'get' . $name;
+        if (method_exists($this, $getter)) {
+            return $this->$getter();
+        } elseif (method_exists($this, 'set' . $name)) {
+            throw new BadCallException(['Свойство {class}::{property} доступно только для записи',
+                'class' => get_class($this),
+                'property' => $name
+            ]);
+        } else {
+            throw new UnknownPropertyException(['Свойство {class}::{property} не определено',
+                'class' => get_class($this),
+                'property' => $name
+            ]);
+        }
+    }
+
+    /**
+     * Проверяет, доступно ли свойство для чтения.
+     *
+     * @param $name
+     * @param bool $checkVars
+     * @return bool
+     */
+    public function canGetProperty($name, $checkVars = false)
+    {
+        return method_exists($this, 'get' . $name)
+            || $checkVars && property_exists($this, $name);
+    }
+
+    /**
+     * Устанавливает значение свойства объекта.
+     *
+     * @param $name
+     * @param $value
+     * @throws BadCallException - если запрошенное свойство доступно только для записи
+     * @throws UnknownPropertyException - если запрошенное свойство не определено
+     */
+    public function __set($name, $value)
+    {
+        $setter = 'set' . $name;
+        if (method_exists($this, $setter)) {
+            $this->$setter($value);
+        } elseif (method_exists($this, 'get' . $name)) {
+            throw new BadCallException(['Свойство {class}::{property} доступно только для чтения',
+                'class' => get_class($this),
+                'property' => $name
+            ]);
+        } else {
+            throw new UnknownPropertyException(['Свойство {class}::{property} не определено',
+                'class' => get_class($this),
+                'property' => $name
+            ]);
+        }
+    }
+
+    /**
+     * Проверяет, доступно ли свойство для записи.
+     *
+     * @param $name
+     * @param bool $checkVars
+     * @return bool
+     */
+    public function canSetProperty($name, $checkVars = false)
+    {
+        return method_exists($this, 'set' . $name)
+            || $checkVars && property_exists($this, $name);
+    }
+
     /**
      * Инициализация объекта.
      * Вызывается из конструктора класса после применения конфигурационного массива.
@@ -38,7 +118,8 @@ class BaseObject
     public function __construct(array $config = [])
     {
         if (!empty($config)) {
-            ObjectConfigureHelper::configure($this);
+            ObjectConfigureHelper::configure($this, $config);
         }
+        $this->init();
     }
 }

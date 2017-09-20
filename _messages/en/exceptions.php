@@ -10,4 +10,8 @@
 return [
     'Псевдоним пути {alias} должен начинаться с символа \'@\'' => 'The alias of the path {alias} must begin with a symbol \'@\'',
     'Неизвестный псевдоним пути {alias}' => 'Unknown path alias {alias}',
+
+    'Свойство {class}::{property} доступно только для чтения' => 'The property {class}::{property} is read-only',
+    'Свойство {class}::{property} доступно только для записи' => 'The property {class}::{property} is write-only',
+    'Свойство {class}::{property} не определено' => 'The property {class}::{property} is unknown',
 ];
