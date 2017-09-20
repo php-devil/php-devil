@@ -45,6 +45,6 @@ class StringHelper
      */
     public static function convertI2N($identifier)
     {
-        return $identifier;
+        return str_replace(' ', '', ucwords(str_replace('-', ' ', strtolower($identifier))));
     }
 }
