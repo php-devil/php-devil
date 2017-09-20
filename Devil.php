@@ -7,9 +7,9 @@
 
 namespace PhpDevil;
 
-
+use PhpDevil\base\localization\TranslationManager;
 use PhpDevil\base\aliases\AliasManager;
-use PhpDevil\base\scalar\StringHelper;
+
 
 class Devil
 {
@@ -20,14 +20,48 @@ class Devil
     private static $_aliasManager = null;
 
     /**
-     * Инициализация менеджера путей при первом обращении
+     * Менеджер перевода сообщений
+     * @var TranslationManager
      */
-    protected static function ensureAliases()
+    private static $_translationManager = null;
+
+    /**
+     * Инициализация менеджера путей при первом обращении
+     * @param $class
+     * @return bool
+     */
+    public static function ensureAliases($class = AliasManager::class)
     {
         if (null === self::$_aliasManager) {
-            self::$_aliasManager = new AliasManager();
+            self::$_aliasManager = new $class();
             self::$_aliasManager->register('@core', __DIR__);
+            return true;
         }
+        return false;
+    }
+
+    /**
+     * Инициализация менеджера локализаций текстов
+     * @param string $class
+     * @return bool
+     */
+    public static function ensureTranslations($class = TranslationManager::class)
+    {
+        if (null === self::$_translationManager) {
+            self::$_translationManager = new $class();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Устанвока языка интерфейса
+     * @param $language
+     */
+    public static function setInterfaceLanguage($language = 'ru')
+    {
+        static::ensureTranslations();
+        self::$_translationManager->setLanguage($language);
     }
 
     /**
@@ -42,12 +76,27 @@ class Devil
         self::$_aliasManager->register($shortcut, $path, $url);
     }
 
+    /**
+     * Разворачивает псевдоним пути в реальный путь по файловой системе
+     *
+     * @param $alias
+     * @param array $options
+     * @return string
+     */
     public static function getPathOf($alias, array $options = [])
     {
         self::ensureAliases();
         return self::$_aliasManager->getPathOf($alias, $options);
     }
 
+    /**
+     * Разворачивает псевдоним пути в URL адрес, если корневому ярлыку назначен
+     * корневой URL
+     *
+     * @param $alias
+     * @param array $options
+     * @return string
+     */
     public static function getUrlOf($alias, array $options = [])
     {
         self::ensureAliases();
@@ -55,14 +104,15 @@ class Devil
     }
 
     /**
-     * @param $packet
+     * @param $package
      * @param $template
      * @param $arguments
      *
      * @return string
      */
-    public static function t($packet, $template, array $arguments = null)
+    public static function t($package, $template, array $arguments = null)
     {
-        return StringHelper::render($template, $arguments);
+        self::ensureTranslations();
+        return self::$_translationManager->translate($package, $template, $arguments);
     }
 }

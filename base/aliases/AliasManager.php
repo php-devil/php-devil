@@ -109,7 +109,8 @@ class AliasManager
      */
     protected function extractRootPath(&$alias, $source)
     {
-        if (false !== ($pos = strpos($alias, '/'))) {
+        if (false === ($pos = strpos($alias, '/'))) $pos = strpos($alias, '{...}');
+        if (false !== $pos) {
             $shortcut = substr($alias, 0, $pos);
             if (isset($source[$shortcut])) {
                 $alias = substr($alias, $pos + 1);

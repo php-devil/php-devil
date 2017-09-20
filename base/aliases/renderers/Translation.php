@@ -10,8 +10,10 @@ use PhpDevil\base\aliases\DefaultAliasRenderer;
 
 class Translation extends DefaultAliasRenderer
 {
+    const MESS_DIR_NAME = '_messages';
+
     public static function beforeRender($alias, array $options = [])
     {
-        return str_replace('{...}', '/messages/' . $options['language'] . '/', $alias);
+        return str_replace('{...}', '/' . self::MESS_DIR_NAME . '/' . $options['language'] . '/', $alias);
     }
 }
