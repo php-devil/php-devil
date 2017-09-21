@@ -6,6 +6,7 @@
  */
 
 namespace PhpDevil\components\session\storage;
+use PhpDevil\components\session\SessionStorage;
 
 /**
  * Class DefaultStorage
@@ -14,7 +15,7 @@ namespace PhpDevil\components\session\storage;
  * @package PhpDevil\components\session\storage
  * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
  */
-class DefaultStorage
+class DefaultStorage implements SessionStorage
 {
 
 }

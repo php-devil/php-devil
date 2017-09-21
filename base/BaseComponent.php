@@ -17,5 +17,11 @@ namespace PhpDevil\base;
  */
 abstract class BaseComponent extends BaseObject
 {
+    protected $_owner = null;
 
+    public function __construct($id, $owner, array $config = [])
+    {
+        $this->_owner = null;
+        parent::__construct($config);
+    }
 }

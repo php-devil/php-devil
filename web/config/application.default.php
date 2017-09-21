@@ -14,5 +14,7 @@ return [
             'storage' => \PhpDevil\components\session\storage\DefaultStorage::class,
             'name'    => 'php-devil-app',
         ],
+
+        'default' => 'test',
     ],
 ];

@@ -9,6 +9,8 @@ namespace PhpDevil\base;
 use PhpDevil\base\object\BadCallException;
 use PhpDevil\base\object\ObjectConfigureHelper;
 use PhpDevil\base\object\UnknownPropertyException;
+use PhpDevil\base\scalar\ArrayHelper;
+use PhpDevil\web\Application;
 
 /**
  * Базовый объект.
@@ -126,9 +128,9 @@ abstract class BaseObject implements Object
      */
     public function __construct(array $config = [])
     {
-        $config =  array_merge(static::configurationDefault(), $config);
-        if (!empty($config)) {
-            ObjectConfigureHelper::configure($this, $config);
+        $fullConfig = ArrayHelper::mergeRecursively(static::configurationDefault(), $config);
+        if (!empty($fullConfig)) {
+            ObjectConfigureHelper::configure($this, $fullConfig);
         }
         $this->init();
     }

@@ -10,6 +10,16 @@ use PhpDevil\base\BaseApplication;
 use PhpDevil\base\BaseObject;
 use PhpDevil\base\object\ObjectConfigureHelper;
 
+/**
+ * Локатор служб приложения
+ *
+ * @property ComponentsContainer $components
+ * @property ModelsContainer $models
+ * @property ModulesContainer $modules
+ *
+ * @package PhpDevil\base\services
+ * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
+ */
 class ServiceLocator extends BaseObject
 {
     /**
@@ -41,13 +51,40 @@ class ServiceLocator extends BaseObject
         ];
     }
 
-    public function setContainers(array $containers)
+    /**
+     * При наличии контейнера с заданным именем возвращает указанный контейнер, в
+     * противном случае - пытается вернуть значение свойства
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name)
     {
-        foreach ($containers as $name=>$configuration) {
-            $this->_containers[$name] = ObjectConfigureHelper::instantiate($configuration);
+        if (in_array($name, [self::MODULE, self::MODEL, self::COMPONENT])) {
+            return $this->_containers[$name];
+        } else {
+            return parent::__get($name);
         }
     }
 
+    /**
+     * Конфигуратор вложенных контейнеров
+     * @param array $containers
+     */
+    public function setContainers(array $containers)
+    {
+        foreach ($containers as $name=>$configuration) {
+            $this->_containers[$name] = ObjectConfigureHelper::instantiate($configuration, [$name, $this]);
+        }
+    }
+
+    /**
+     * Конструктор службы.
+     * Владельцем службы является фронт-контроллер приложения.
+     *
+     * @param array $application
+     * @param array $config
+     */
     public function __construct($application, array $config = [])
     {
         $this->_application = $application;

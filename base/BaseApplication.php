@@ -26,12 +26,16 @@ abstract class BaseApplication extends BaseModule
      */
     public function setComponents(array $components=[])
     {
+        foreach ($components as $id => $config) {
+
+
+        }
     }
 
     public function __construct(array $config = [])
     {
         Devil::ensureServices($this);
-        parent::__construct($config);
+        parent::__construct('app', Devil::container(), $config);
     }
 
     public function __destruct()
