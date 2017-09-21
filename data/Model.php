@@ -26,15 +26,6 @@ class Model extends BaseModel
     }
 
     /**
-     * Атрибуты модели, которые должны быть сконфигурированы особым образои (не по умолчанию)
-     * @return array
-     */
-    public static function attributes()
-    {
-        return [];
-    }
-
-    /**
      * Атрибуты модели определяются наличием из правил валидации rules().
      * Атрибуты, которые не должны проходить валидацию, должны быть перечислены с правилом валидации safe.
      * К не перечисленные в правилах валидации атрибутам будет применяться логика обработки свойств объекта.
@@ -43,6 +34,10 @@ class Model extends BaseModel
      */
     protected function ensureAttributes()
     {
+        $rules = static::rules();
+        foreach ($rules as $rule) {
+            foreach ($rule[0] as $attrName) $this->_attributes[$attrName] = null;
 
+        }
     }
 }

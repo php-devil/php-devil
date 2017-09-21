@@ -8,6 +8,7 @@
 namespace PhpDevil\data;
 use PhpDevil\base\BaseComponent;
 use PhpDevil\base\services\ModelsContainer;
+use PhpDevil\Devil;
 
 abstract class BaseModel extends BaseComponent
 {
@@ -33,11 +34,20 @@ abstract class BaseModel extends BaseComponent
      * В качестве параметра принимает массив значений атрибутов модели
      *
      * @param $attributes
+     * @return static
      */
-    public static function model($attributes)
+    public static function model(array $attributes = [])
     {
+        $className = get_called_class();
+        if (!Devil::container()->models->has($className)) {
+            Devil::container()->models->register($className, ['class' => $className]);
+        }
+        $model = Devil::container()->models->get($className);
 
+        return $model;
     }
+
+    abstract protected function ensureAttributes();
 
     /**
      * Коноструктор модели.
@@ -55,5 +65,6 @@ abstract class BaseModel extends BaseComponent
             'class' => get_class($this)
         ]);
         parent::__construct($id, $owner, $config);
+        $this->ensureAttributes();
     }
 }

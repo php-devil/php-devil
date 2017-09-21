@@ -16,6 +16,7 @@ return [
         ],
 
         'user' => \PhpDevil\components\user\User::class,
+        'db'   => \PhpDevil\components\db\Connection::class,
 
 
     ],
