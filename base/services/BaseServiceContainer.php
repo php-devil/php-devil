@@ -8,7 +8,6 @@
 namespace PhpDevil\base\services;
 use PhpDevil\base\BaseComponent;
 use PhpDevil\base\object\ObjectConfigureHelper;
-use PhpDevil\Devil;
 
 abstract class BaseServiceContainer extends BaseComponent implements ServiceContainer
 {
@@ -25,13 +24,18 @@ abstract class BaseServiceContainer extends BaseComponent implements ServiceCont
      * Службу с заданным идентификатором можно переопределять до момента ее инициализации.
      *
      * @param $id
-     * @param array $config
+     * @param array|object $config
      * @throws ServiceLocatorException
      */
-    public function register($id, array $config)
+    public function register($id, $config)
     {
         if (!isset($this->_instantiated[$id])) {
-            $this->_registered[$id] = $config;
+            if (is_object($config)) {
+                $this->_instantiated[$id] = $config;
+                $this->_registered[$id] = true;
+            } else {
+                $this->_registered[$id] = $config;
+            }
         } else {
             throw new ServiceLocatorException([
                 'Невозможно переопределить созданную службу {service}', 'service' => $id

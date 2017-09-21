@@ -15,6 +15,8 @@ return [
             'name'    => 'php-devil-app',
         ],
 
-        'default' => 'test',
+        'user' => \PhpDevil\components\user\User::class,
+
+
     ],
 ];

@@ -7,7 +7,18 @@
 
 namespace PhpDevil\web;
 use PhpDevil\base\BaseApplication;
+use PhpDevil\components\session\Session;
+use PhpDevil\components\user\User;
 
+/**
+ * Class Application
+ *
+ * @property Session $session
+ * @property User $user
+ *
+ * @package PhpDevil\web
+ * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
+ */
 class Application extends BaseApplication
 {
     /**

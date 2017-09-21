@@ -17,4 +17,6 @@ return [
 
     'Невозможно переопределить созданную службу {service}' => 'Service {service} has an instance and can\'t be redefined',
     'Служба {service} не определена' => 'Unknown service {service}',
+
+    'Для создания экземпляра класса модели используйте {class}::model(array $attributes = []);' => 'Use {class}::model(array $attributes = []); to instantiate a model',
 ];

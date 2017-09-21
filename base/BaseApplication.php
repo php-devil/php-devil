@@ -12,6 +12,16 @@ use PhpDevil\Devil;
 
 abstract class BaseApplication extends BaseModule
 {
+
+    public function __get($name)
+    {
+        if (Devil::container()->components->has($name)) {
+            return Devil::container()->components->get($name);
+        } else {
+            return parent::__get($name);
+        }
+    }
+
     /**
      * Конфигурирование фронт-контроллеров модулей
      * @param array $modules
@@ -27,8 +37,8 @@ abstract class BaseApplication extends BaseModule
     public function setComponents(array $components=[])
     {
         foreach ($components as $id => $config) {
-
-
+            if (is_string($config) && class_exists($config)) $config = ['class' => $config];
+            Devil::container()->components->register($id, $config);
         }
     }
 

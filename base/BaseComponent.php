@@ -19,9 +19,24 @@ abstract class BaseComponent extends BaseObject
 {
     protected $_owner = null;
 
+    /**
+     * Возвращает ссылку на владельца компонента или null
+     * @return null
+     */
+    public function getComponentOwner()
+    {
+        return $this->_owner;
+    }
+
+    /**
+     * BaseComponent constructor.
+     * @param string $id
+     * @param object $owner
+     * @param array $config
+     */
     public function __construct($id, $owner, array $config = [])
     {
-        $this->_owner = null;
+        $this->_owner = $owner;
         parent::__construct($config);
     }
 }
