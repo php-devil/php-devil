@@ -36,7 +36,6 @@ abstract class BaseApplication extends BaseModule
 
     public function __destruct()
     {
-        echo ' --dd';
         Devil::clearServices();
     }
 }

@@ -126,8 +126,9 @@ abstract class BaseObject implements Object
      */
     public function __construct(array $config = [])
     {
+        $config =  array_merge(static::configurationDefault(), $config);
         if (!empty($config)) {
-            ObjectConfigureHelper::configure($this, array_merge(static::configurationDefault(), $config));
+            ObjectConfigureHelper::configure($this, $config);
         }
         $this->init();
     }

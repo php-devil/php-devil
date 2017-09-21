@@ -33,6 +33,18 @@ class Devil
     private static $_services = null;
 
     /**
+     * Доступ к локатору служб
+     * @return null|ServiceLocator
+     */
+    public static function container()
+    {
+        if (null === self::$_services) {
+            //todo: throw exception
+        }
+        return self::$_services;
+    }
+
+    /**
      * Инициализация локатора служб
      *
      * @param $application

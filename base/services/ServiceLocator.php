@@ -23,6 +23,10 @@ class ServiceLocator extends BaseObject
      */
     private $_containers = [];
 
+    const COMPONENT = 'components';
+    const MODULE    = 'modules';
+    const MODEL     = 'models';
+
     /**
      * @return array
      */
