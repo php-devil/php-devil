@@ -11,6 +11,9 @@ class ArrayHelper
 {
     public static function mergeRecursively(array $first = [], array $second = [])
     {
+        if (empty($first)) return $second;
+        if (empty($second)) return $first;
+
         foreach ($first as $k=>$v)
         {
             if (isset($second[$k])) {

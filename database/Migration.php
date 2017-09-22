@@ -51,7 +51,7 @@ abstract class Migration extends BaseObject
      */
     public function __call($name, $arguments)
     {
-        print_r(func_get_args());
+        return $this->db()->getTableSchema()->createColumn($name, $arguments);
     }
 
     /**
@@ -64,6 +64,11 @@ abstract class Migration extends BaseObject
      */
     protected function createTable($tableName, array $definitions, $options = '')
     {
+        $sql = $this->getCreateTableQuery($tableName, $definitions, $options);
+    }
 
+    protected function getCreateTableQuery($tableName, array $definitions, $options = '')
+    {
+        print_r(func_get_args());
     }
 }

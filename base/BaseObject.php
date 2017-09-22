@@ -10,6 +10,7 @@ use PhpDevil\base\object\BadCallException;
 use PhpDevil\base\object\ObjectConfigureHelper;
 use PhpDevil\base\object\UnknownPropertyException;
 use PhpDevil\base\scalar\ArrayHelper;
+use PhpDevil\components\db\Connection;
 use PhpDevil\web\Application;
 
 /**

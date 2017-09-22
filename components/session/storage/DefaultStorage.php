@@ -17,5 +17,8 @@ use PhpDevil\components\session\SessionStorage;
  */
 class DefaultStorage implements SessionStorage
 {
+    public function setName($name)
+    {
 
+    }
 }

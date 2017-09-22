@@ -8,7 +8,7 @@
 namespace PhpDevil\components\session\storage;
 use PhpDevil\components\session\SessionStorage;
 
-class MemoryStorage implements SessionStorage
+class MemoryStorage extends DefaultStorage implements SessionStorage
 {
 
 }
