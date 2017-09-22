@@ -15,7 +15,10 @@ class m_00000000_000000_init_migrations extends \PhpDevil\database\Migration
 {
     public function up()
     {
-
+        $this->createTable('migrations', [
+            'id'      => $this->string()->notNull()->unique(),
+            'applied' => $this->integer()->notNull()->defaultExpression(),
+        ]);
     }
 
     public function down()

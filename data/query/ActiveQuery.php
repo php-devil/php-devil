@@ -6,12 +6,11 @@
  */
 
 namespace PhpDevil\data\query;
-use PhpDevil\base\BaseObject;
 use PhpDevil\components\db\Connection;
 use PhpDevil\data\ActiveRecord;
 use PhpDevil\Devil;
 
-class ActiveQuery extends BaseObject
+class ActiveQuery extends Query
 {
     /**
      * Имя класса основной модели для построения запроса
