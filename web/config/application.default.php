@@ -15,8 +15,8 @@ return [
             'name'    => 'php-devil-app',
         ],
 
-        'user' => \PhpDevil\components\user\User::class,
-        'db'   => \PhpDevil\components\db\Connection::class,
+        'user' => ['class' => \PhpDevil\components\user\User::class],
+        'db'   => ['class' => \PhpDevil\components\db\Connection::class],
 
 
     ],
