@@ -37,10 +37,9 @@ class Connection extends BaseComponent
         return $this->_driverName;
     }
 
-    public function getTableSchema()
+    public function getTableSchemaClass()
     {
-        $className = 'PhpDevil\database\\' . $this->getDriverName() . '\Schema';
-        return new $className();
+        return 'PhpDevil\database\\' . $this->getDriverName() . '\Schema';
     }
 
     public function init()

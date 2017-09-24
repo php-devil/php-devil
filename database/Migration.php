@@ -7,6 +7,7 @@
 
 namespace PhpDevil\database;
 use PhpDevil\base\BaseObject;
+use PhpDevil\database\generic\Schema;
 use PhpDevil\Devil;
 
 /**
@@ -19,6 +20,10 @@ use PhpDevil\Devil;
 abstract class Migration extends BaseObject
 {
     protected $_connection = null;
+
+    protected $_schemas = null;
+
+
 
     /**
      * Применение миграции
@@ -51,7 +56,23 @@ abstract class Migration extends BaseObject
      */
     public function __call($name, $arguments)
     {
-        return $this->db()->getTableSchema()->createColumn($name, $arguments);
+        $schema = $this->db()->getTableSchemaClass();
+        $size = $arguments[0] ?? null;
+        unset($arguments[0]);
+        return $schema::createColumn([
+            'type' => $name,
+            'size' => $size,
+            'params' => $arguments
+        ]);
+    }
+
+    public function integerPrimaryKey()
+    {
+        return $this->integer(11)
+            ->notNull()
+            ->unsigned()
+            ->autoIncrement()
+            ->primary();
     }
 
     /**
@@ -64,11 +85,16 @@ abstract class Migration extends BaseObject
      */
     protected function createTable($tableName, array $definitions, $options = '')
     {
-        $sql = $this->getCreateTableQuery($tableName, $definitions, $options);
+        $schema = $this->createSchema($tableName, $definitions, $options);
     }
 
-    protected function getCreateTableQuery($tableName, array $definitions, $options = '')
+    protected function createSchema($tableName, $definitions, $options = '')
     {
-        print_r(func_get_args());
+        $schema = $this->db()->getTableSchemaClass();
+        return new $schema([
+            'tableName' => $tableName,
+            'columns'   => $definitions,
+            'tableOptions' => $options
+        ]);
     }
 }

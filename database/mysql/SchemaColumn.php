@@ -10,4 +10,16 @@ namespace PhpDevil\database\mysql;
 class SchemaColumn extends \PhpDevil\database\generic\SchemaColumn
 {
 
+    public function __toString()
+    {
+        $sql = $this->_type;
+        if ($this->_size) $sql .= '(' . $this->_size . ')';
+        if ($this->_unsigned) $sql .= ' unsigned';
+        if ($this->_notNull)  $sql .= ' not null';
+        if ($this->_default) {
+            $sql .= ' default \'' . $this->_default . '\'';
+        }
+        if ($this->_autoIncrement) $sql .= ' auto_increment';
+        return $sql;
+    }
 }
