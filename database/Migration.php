@@ -86,6 +86,9 @@ abstract class Migration extends BaseObject
     protected function createTable($tableName, array $definitions, $options = '')
     {
         $schema = $this->createSchema($tableName, $definitions, $options);
+        $sql = $schema->getCreateTableQuery();
+
+        echo "\n\nQUERY:\n\n" . $sql;
     }
 
     protected function createSchema($tableName, $definitions, $options = '')

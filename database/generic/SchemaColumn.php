@@ -11,8 +11,8 @@ use PhpDevil\base\BaseObject;
 class SchemaColumn extends BaseObject
 {
     const K_PRIMARY = 1;
-    const K_UNIQUE  = 2;
-    const K_INDEX   = 3;
+    const K_INDEX = 2;
+    const K_UNIQUE = 3;
 
     protected $_type = null;
 
@@ -86,17 +86,15 @@ class SchemaColumn extends BaseObject
         return $this;
     }
 
-    public function unique($name)
+    public function index()
     {
-        $this->_keyType = self::K_UNIQUE;
-        $this->_keyName = $name;
+        $this->_keyType = self::K_INDEX;
         return $this;
     }
 
-    public function index($name)
+    public function unique()
     {
-        $this->_keyType = self::K_INDEX;
-        $this->_keyName = $name;
+        $this->_keyType = self::K_UNIQUE;
         return $this;
     }
 
@@ -106,4 +104,8 @@ class SchemaColumn extends BaseObject
         return $this;
     }
 
+    public function isKey()
+    {
+        return $this->_keyType;
+    }
 }

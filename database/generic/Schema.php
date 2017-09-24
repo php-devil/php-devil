@@ -24,6 +24,10 @@ abstract class Schema extends BaseObject
 
     protected $_tableOptions = [];
 
+    protected $_primaryKey = null;
+
+    protected $_keys;
+
     abstract public static function getColumnClass();
 
     public static function setDefaults($column)
@@ -55,8 +59,17 @@ abstract class Schema extends BaseObject
     public function setColumns(array $columns)
     {
         foreach ($columns as $k=>$v) {
-
             $this->_columns[$k] = static::setDefaults($v);
+            if ($key = $v->isKey()) {
+                if (SchemaColumn::K_PRIMARY === $key) {
+                    if (null === $this->_primaryKey) {
+                        $this->_primaryKey = [];
+                    }
+                    $this->_primaryKey[] = $k;
+                } else {
+                    $this->_keys['idx_' . $k] = [$key, $k];
+                }
+            }
         }
     }
 }
