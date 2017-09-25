@@ -14,13 +14,13 @@ class SchemaColumn extends \PhpDevil\database\generic\SchemaColumn
         if ('integer' == $type) {
             $this->_type = 'int';
             if (null === $this->_size) $this->_size = 11;
-        }
-        if ('string' == $type) {
+        } elseif ('string' == $type) {
             $this->_type = 'varchar';
             if (null === $this->_size) $this->_size = 255;
-        }
-        if ('char' == $type) {
+        } elseif ('char' == $type) {
             if (null === $this->_size) $this->_size = 255;
+        } else {
+            parent::setType($type);
         }
     }
 
