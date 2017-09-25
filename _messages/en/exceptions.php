@@ -21,4 +21,7 @@ return [
     'Для создания экземпляра класса модели используйте {class}::model(array $attributes = []);' => 'Use {class}::model(array $attributes = []); to instantiate a model',
 
     'Не установлено обязательное свойство {class}::{property}' => 'Required property {class}::{property} is missed',
+
+    'Не указан маршрут команды' => 'Command route is empty',
+    'Команда {class} должна содержать метод run()' => 'Console command\'s method {class}::run() is not declared',
 ];

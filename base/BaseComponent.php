@@ -19,6 +19,7 @@ abstract class BaseComponent extends BaseObject
 {
     protected $_owner = null;
 
+
     /**
      * Возвращает ссылку на владельца компонента или null
      * @return null

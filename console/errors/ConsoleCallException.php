@@ -5,4 +5,10 @@
  * @license http://www.php-devil.ru/license/
  */
 
-return [];
+namespace PhpDevil\console\errors;
+use PhpDevil\base\BaseException;
+
+class ConsoleCallException extends BaseException
+{
+
+}

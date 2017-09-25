@@ -6,6 +6,7 @@
  */
 
 namespace PhpDevil\base;
+use PhpDevil\base\scalar\StringHelper;
 
 /**
  * Реализация базового функционала фронт-контроллера модуля приложения:
@@ -21,6 +22,8 @@ abstract class BaseModule extends BaseComponent implements Module
      * @var
      */
     protected $_controllers = [];
+
+    protected $_commands = [];
 
     /**
      * Предустановка конфигураций контроллеров
@@ -46,11 +49,37 @@ abstract class BaseModule extends BaseComponent implements Module
     }
 
     /**
+     * Предустановка конфигураций контроллеров
+     * @param array $controllers
+     */
+    public function setCommands(array $controllers=[])
+    {
+        foreach ($controllers as $id=>$config) {
+            $this->_commands[$id]=$config;
+        }
+    }
+
+    /**
      * Возвращает имя пространства имен контроллеров
      * @return string
      */
     public function getCommandsNamespace()
     {
         return dirname(get_class($this)) . '\\commands';
+    }
+
+    public function loadCommand($id)
+    {
+        if (isset($this->_commands[$id])) {
+            $className = $this->_commands[$id];
+        } else {
+            $className = $this->getCommandsNamespace() . '\\' . StringHelper::convertI2N($id) . 'Command';
+        }
+
+        if (class_exists($className)) {
+            return new $className($id, $this, []);
+        } else {
+            return null;
+        }
     }
 }

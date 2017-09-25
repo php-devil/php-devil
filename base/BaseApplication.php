@@ -22,12 +22,25 @@ abstract class BaseApplication extends BaseModule
         }
     }
 
+    public function loadModule($id)
+    {
+        if (Devil::container()->modules->has($id)) {
+            return Devil::container()->modules->get($id);
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Конфигурирование фронт-контроллеров модулей
      * @param array $modules
      */
     public function setModules(array $modules=[])
     {
+        foreach ($modules as $id => $config) {
+            if (is_string($config) && class_exists($config)) $config = ['class' => $config];
+            Devil::container()->modules->register($id, $config);
+        }
     }
 
     /**

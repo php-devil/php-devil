@@ -9,8 +9,9 @@ namespace PhpDevil\base;
 
 abstract class BaseController extends BaseComponent implements Controller
 {
-    public function __construct($id, array $config = [])
+
+    public function performAction($id)
     {
-        parent::__construct($config);
+        echo '[' . $id . ']';
     }
 }
