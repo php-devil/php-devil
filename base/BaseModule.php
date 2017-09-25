@@ -35,10 +35,22 @@ abstract class BaseModule extends BaseComponent implements Module
 
     /**
      * Возвращает имя пространства имен контроллеров
+     * @param $suffix
      * @return string
      */
-    public function getControllersNamespace()
+    public function getControllersNamespace($suffix = null)
     {
-        return dirname(get_class($this)) . '\\controllers';
+        $namespace = dirname(get_class($this)) . '\\controllers';
+        if ($suffix) $namespace .= '\\' . $suffix;
+        return $namespace;
+    }
+
+    /**
+     * Возвращает имя пространства имен контроллеров
+     * @return string
+     */
+    public function getCommandsNamespace()
+    {
+        return dirname(get_class($this)) . '\\commands';
     }
 }

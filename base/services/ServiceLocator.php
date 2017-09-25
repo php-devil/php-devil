@@ -51,6 +51,12 @@ class ServiceLocator extends BaseObject
         ];
     }
 
+    public function clear()
+    {
+        $this->_application = null;
+        foreach ($this->_containers as $container) $container->clear();
+    }
+
     /**
      * При наличии контейнера с заданным именем возвращает указанный контейнер, в
      * противном случае - пытается вернуть значение свойства

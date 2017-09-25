@@ -8,6 +8,7 @@
 namespace PhpDevil\database;
 use PhpDevil\base\BaseObject;
 use PhpDevil\database\generic\Schema;
+use PhpDevil\database\query\QueryPlain;
 use PhpDevil\Devil;
 
 /**
@@ -33,9 +34,10 @@ abstract class Migration extends BaseObject
 
     /**
      * Откат миграции
+     * @param bool $soft;
      * @return mixed
      */
-    abstract public function down();
+    abstract public function down($soft = false);
 
     public $connectionName = 'db';
 
@@ -53,13 +55,13 @@ abstract class Migration extends BaseObject
      *
      * @param $name
      * @param $arguments
+     * @return MigrationColumn
      */
     public function __call($name, $arguments)
     {
-        $schema = $this->db()->getTableSchemaClass();
         $size = $arguments[0] ?? null;
         unset($arguments[0]);
-        return $schema::createColumn([
+        return new MigrationColumn([
             'type' => $name,
             'size' => $size,
             'params' => $arguments
@@ -82,22 +84,26 @@ abstract class Migration extends BaseObject
      * @param array  $definitions - определения колонок
      * @param string $options     - параметры таблицы
      *
+     * @return QueryPlain
      */
     protected function createTable($tableName, array $definitions, $options = '')
     {
-        $schema = $this->createSchema($tableName, $definitions, $options);
-        $sql = $schema->getCreateTableQuery();
-
-        echo "\n\nQUERY:\n\n" . $sql;
+        $schema = $this->createSchema($tableName, $definitions);
+        $schema->createTable($options);
     }
 
-    protected function createSchema($tableName, $definitions, $options = '')
+    public function dropTable($tableName, $addIfExists = false)
     {
-        $schema = $this->db()->getTableSchemaClass();
-        return new $schema([
-            'tableName' => $tableName,
-            'columns'   => $definitions,
-            'tableOptions' => $options
-        ]);
+        $this->db()->schema->findTable($tableName)->dropTable($addIfExists);
+    }
+
+
+    protected function createSchema($tableName, $definitions = [])
+    {
+        $table = $this->db()->schema->findTable($tableName);
+        foreach ($definitions as $name=>$column) {
+            $table->addColumnDefinition($name, $column);
+        }
+        return $table;
     }
 }

@@ -155,6 +155,7 @@ class Devil
      */
     public static function clearServices()
     {
+        if (null !== self::$_services) self::$_services->clear();
         self::$_services = null;
         if (null !== self::$_translationManager) {
             self::$_translationManager->clearCache();

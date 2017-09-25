@@ -7,105 +7,69 @@
 
 namespace PhpDevil\database\generic;
 use PhpDevil\base\BaseObject;
+use PhpDevil\database\MigrationColumn;
 
+/**
+ * Class SchemaColumn
+ * Построение SQL выражения для определения поля таблицы
+ *
+ * @package PhpDevil\database\generic
+ * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
+ */
 class SchemaColumn extends BaseObject
 {
-    const K_PRIMARY = 1;
-    const K_INDEX = 2;
-    const K_UNIQUE = 3;
-
     protected $_type = null;
-
     protected $_size = null;
-
-    protected $_params = null;
-
     protected $_notNull = false;
-
     protected $_unsigned = false;
-
     protected $_default = null;
-
-    protected $_keyName = null;
-
-    protected $_keyType = null;
-
     protected $_autoIncrement = false;
+    protected $_keyType = null;
 
     public function setType($type)
     {
         $this->_type = $type;
-    }
-
-    public function getType()
-    {
-        return $this->_type;
+        return $this;
     }
 
     public function setSize($size)
     {
-        $this->_size = $size;
-    }
-
-    public function getSize()
-    {
-        return $this->_size;
-    }
-
-    public function setParams($params)
-    {
-        $this->_params = $params;
-    }
-
-    public function getParams()
-    {
-        return $this->_params;
-    }
-
-    public function notNull()
-    {
-        $this->_notNull = true;
+        if ($size) $this->_size = $size;
         return $this;
     }
 
-    public function autoIncrement()
+    public function setNotNull($notNull)
     {
-        $this->_autoIncrement = true;
+        $this->_notNull = $notNull;
         return $this;
     }
 
-    public function unsigned()
+    public function setUnsigned($unsigned)
     {
-        $this->_unsigned = true;
+        $this->_unsigned = $unsigned;
         return $this;
     }
 
-    public function primary()
+    public function setDefault($default)
     {
-        $this->_keyType = self::K_PRIMARY;
+        $this->_default = $default;
         return $this;
     }
 
-    public function index()
+    public function setAutoIncrement($ai)
     {
-        $this->_keyType = self::K_INDEX;
+        $this->_autoIncrement = $ai;
         return $this;
     }
 
-    public function unique()
+    public function setKeyType($key)
     {
-        $this->_keyType = self::K_UNIQUE;
+        $this->_keyType = $key;
         return $this;
     }
 
-    public function defaultValue($value)
+    final public function __construct(MigrationColumn $column)
     {
-        $this->_default = $value;
-        return $this;
-    }
-
-    public function isKey()
-    {
-        return $this->_keyType;
+        parent::__construct($column->getConfig());
     }
 }

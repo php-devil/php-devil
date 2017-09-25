@@ -19,4 +19,6 @@ return [
     'Служба {service} не определена' => 'Unknown service {service}',
 
     'Для создания экземпляра класса модели используйте {class}::model(array $attributes = []);' => 'Use {class}::model(array $attributes = []); to instantiate a model',
+
+    'Не установлено обязательное свойство {class}::{property}' => 'Required property {class}::{property} is missed',
 ];

@@ -9,6 +9,20 @@ namespace PhpDevil\database\mysql;
 
 class SchemaColumn extends \PhpDevil\database\generic\SchemaColumn
 {
+    public function setType($type)
+    {
+        if ('integer' == $type) {
+            $this->_type = 'int';
+            if (null === $this->_size) $this->_size = 11;
+        }
+        if ('string' == $type) {
+            $this->_type = 'varchar';
+            if (null === $this->_size) $this->_size = 255;
+        }
+        if ('char' == $type) {
+            if (null === $this->_size) $this->_size = 255;
+        }
+    }
 
     public function __toString()
     {

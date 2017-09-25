@@ -44,6 +44,7 @@ abstract class BaseApplication extends BaseModule
 
     public function __construct(array $config = [])
     {
+        Devil::clearServices();
         Devil::ensureServices($this);
         parent::__construct('app', Devil::container(), $config);
     }

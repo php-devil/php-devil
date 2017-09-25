@@ -8,9 +8,10 @@
 namespace PhpDevil\data\query;
 use PhpDevil\components\db\Connection;
 use PhpDevil\data\ActiveRecord;
+use PhpDevil\database\query\QueryPlain;
 use PhpDevil\Devil;
 
-class ActiveQuery extends Query
+class ActiveQuery extends QueryPlain
 {
     /**
      * Имя класса основной модели для построения запроса
@@ -38,5 +39,6 @@ class ActiveQuery extends Query
     {
         $this->_mainModelClass = $modelClassName;
         parent::__construct($config);
+        $this->setConnection($this->db()->getPdo());
     }
 }

@@ -64,6 +64,12 @@ abstract class BaseServiceContainer extends BaseComponent implements ServiceCont
         return $this->returnValue($this->_instantiated[$id]);
     }
 
+    public function clear()
+    {
+        $this->_registered = [];
+        $this->_instantiated = [];
+    }
+
     public function returnValue($object)
     {
         return $object;
