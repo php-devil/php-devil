@@ -7,6 +7,8 @@
 
 namespace PhpDevil\components\db;
 use PhpDevil\base\BaseComponent;
+use PhpDevil\data\query\ActiveQuery;
+use PhpDevil\database\generic\ActiveQueryParser;
 use PhpDevil\database\generic\DatabaseSchema;
 use PhpDevil\database\query\QueryPlain;
 
@@ -83,6 +85,13 @@ class Connection extends BaseComponent
     public function getTableSchemaClass()
     {
         return 'PhpDevil\database\\' . $this->getDriverName() . '\Schema';
+    }
+
+    public function prepareActiveQuery(ActiveQuery $query)
+    {
+        /** @var ActiveQueryParser $class */
+        $class = 'PhpDevil\database\\' . $this->getDriverName() . '\ActiveQueryParser';
+        return $this->prepare($class::parse($query));
     }
 
     public function init()

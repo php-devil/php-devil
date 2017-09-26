@@ -16,8 +16,20 @@ class ActiveRecord extends Model
         return 'db';
     }
 
+    /**
+     * @return ActiveQuery
+     */
     public static function find()
     {
         return new ActiveQuery(get_called_class());
+    }
+
+    /**
+     * @param null $condition
+     * @return ActiveQuery
+     */
+    public static function findAll($condition = null)
+    {
+        return static::find()->where($condition);
     }
 }

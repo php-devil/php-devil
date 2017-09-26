@@ -22,6 +22,8 @@ return [
 
     'Не установлено обязательное свойство {class}::{property}' => 'Required property {class}::{property} is missed',
 
+    'Не определен класс в конфигурационном массиве {array}' => 'Configuration array must to define class name {array}',
+
     'Не указан маршрут команды' => 'Command route is empty',
     'Команда {class} должна содержать метод run()' => 'Console command\'s method {class}::run() is not declared',
 ];

@@ -5,4 +5,8 @@
  * @license http://www.php-devil.ru/license/
  */
 
-return [];
+return [
+    'components' => [
+        'db'   => ['class' => \PhpDevil\components\db\Connection::class],
+    ],
+];

@@ -45,7 +45,7 @@ class ObjectConfigureHelper
      */
     public static function instantiate(array $config, array $constructArgs = [])
     {
-        if (!isset($config['class'])) throw new ConfigException(['Не определен класс в конфигурационном массиве'], 1);
+        if (!isset($config['class'])) throw new ConfigException(['Не определен класс в конфигурационном массиве {array}', 'array' => var_export($config, true)], 1);
         if (!class_exists($config['class'])) throw new ConfigException(['Класс {class} не найлен', 'class' => $config['class']], 2);
 
         $className = $config['class'];
