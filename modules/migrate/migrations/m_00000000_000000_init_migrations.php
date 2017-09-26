@@ -21,8 +21,8 @@ class m_00000000_000000_init_migrations extends \PhpDevil\database\Migration
         ]);
     }
 
-    public function down()
+    public function down($soft = false)
     {
-
+        $this->dropTable('migrations', $soft);
     }
 }

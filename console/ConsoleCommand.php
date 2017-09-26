@@ -8,9 +8,34 @@
 namespace PhpDevil\console;
 use PhpDevil\base\BaseController;
 use PhpDevil\console\errors\ConsoleCallException;
+use PhpDevil\Devil;
 
 abstract class ConsoleCommand extends BaseController
 {
+    protected $languagePack = null;
+
+    /**
+     * Запрос подтверждения действия у пользователя
+     *
+     * @param $message
+     * @param array $variants
+     *
+     * @return mixed
+     */
+    public function prompt($message, $variants = ['yes' => true, 'no' => false])
+    {
+        if (is_array($message)) $message = Devil::t($this->languagePack, array_shift($message), $message);
+        echo "\n" . $message . "\n\n";
+
+        $handle = fopen('php://stdin', '');
+        $response = null;
+        while(!in_array($response, array_keys($variants))) {
+            echo 'choose: (' . implode('|', array_keys($variants)) . ') > ';
+            $response = trim(fgets($handle));
+        }
+        return $variants[$response];
+    }
+
     /**
      * Запуск консольной команды на выполнение
      *

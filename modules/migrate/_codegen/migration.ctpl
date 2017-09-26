@@ -1,0 +1,28 @@
+<?php
+/**
+ * Class {CLASS_NAME}
+ * migrate to create/drop table {TABLE_NAME}
+ */
+class {CLASS_NAME} extends \PhpDevil\database\Migration
+{
+    /**
+     * Creates table {TABLE_NAME}
+     * @return void
+     */
+    public function up()
+    {
+        $this->createTable('{TABLE_NAME}', [
+            'id' => $this->integerPrimaryKey(),
+        ]);
+    }
+
+    /**
+     * Drops table {TABLE_NAME}
+     * @param bool $soft - adds 'IF EXISTS' when true
+     * @return void
+     */
+    public function down($soft = false)
+    {
+        $this->dropTable('{TABLE_NAME}', $soft);
+    }
+}

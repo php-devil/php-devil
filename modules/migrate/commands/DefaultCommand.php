@@ -6,12 +6,15 @@
  */
 
 namespace PhpDevil\modules\migrate\commands;
-use PhpDevil\modules\migrate\components\MigrateConsoleCommand;
 
-class DefaultCommand extends MigrateConsoleCommand
+/**
+ * Class DefaultCommand
+ * Алиас команды php devil migrate/up
+ * Применяестя по умолчанию при вызове php devil migrate
+ *
+ * @package PhpDevil\modules\migrate\commands
+ * @author Alexey Volkov <avolkov.webwizardry@gmail.com>
+ */
+class DefaultCommand extends UpCommand
 {
-    public function run($comment)
-    {
-        echo $comment;
-    }
 }
